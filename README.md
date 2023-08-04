@@ -1,36 +1,23 @@
 # KentaToken Smart Contract - Functionalities Summary
-The KentaToken smart contract is a specialized ERC20 token that incorporates a variety of unique features. Here's a comprehensive breakdown of its functionality:
 
-Inheritance: The KentaToken contract inherits functionalities from OpenZeppelin's ERC20Pausable and Ownable contracts. This means it comes with standard ERC20 functionalities, pause controls, and ownership controls.
+The KentaToken contract is an ERC20 token with several additional features, implemented using Solidity version 0.8.0. Here are the main functionalities:
 
-Token Supply: The TOTAL_SUPPLY is a constant set to 
-120
-×
-1
-0
-27
-120×10 
-27
- , signifying the total number of tokens available.
+1. **Total Supply**: The token has a total supply of \(120 \times 10^{9} \times 10^{18}\), defined as a constant within the contract.
 
-Tax Fee: The TAX_FEE is a constant set to 2%. This indicates that each transfer is taxed at 2%, with the tax amount sent to a designated wallet.
+2. **Tax Fee**: There's a 2% tax fee on transfers, and the tax proceeds are sent to a designated tax wallet.
 
-Tax Wallet: The taxWallet state variable is the wallet address that receives the tax collected from each transfer. This address can be updated by the contract owner.
+3. **Set Tax Wallet**: The owner can change the tax wallet address. The address must be valid and not a zero address.
 
-Events: The contract emits FunctionCalled and TransferWithTax events that log when specific functions are called and when transfers with taxation occur, respectively.
+4. **Burn Function**: The owner can burn a specific amount of tokens, thus removing them from circulation.
 
-Constructor: Upon deployment, the contract mints the total supply of tokens and assigns them to the contract creator.
+5. **Ownership Renouncement**: The owner can renounce ownership of the contract, which cannot be undone.
 
-setTaxWallet Function: This function allows the contract owner to update the tax wallet address. It validates that the new address is not the zero address.
+6. **Pause and Unpause**: The owner can pause and unpause token transfers. While paused, no transfers can take place.
 
-burn Function: This function lets the contract owner burn a specified amount of tokens from their balance.
+7. **Maximum Purchase Limit**: Transfers are limited to 1% of the total supply, but this restriction does not apply to the owner of the contract.
 
-renounceOwnership Function: This allows the contract owner to relinquish ownership of the contract. It emits an OwnershipTransferred event.
+8. **Transfer with Tax**: Transfers within the contract consider the 2% tax. The tax amount is transferred to the tax wallet, and the remaining amount is transferred to the recipient. The owner is not subject to the 1% total supply limit.
 
-pause & unpause Functions: These functions enable the contract owner to pause and unpause token transfers.
+9. **Events**: The contract emits events for key functions, providing transparency and traceability. For example, events are emitted for functions like setting the tax wallet, burning tokens, and transfers with tax.
 
-getMaxPurchaseLimit Function: This function provides a way to check the maximum token purchase limit at any given time, which is set to 1% of the total supply.
-
-_transfer Function (Overridden): This function handles token transfers while considering the tax fee and the maximum purchase limit. It first deducts the tax fee, transfers it to the tax wallet, and then transfers the remaining tokens to the recipient. It also checks that the transfer amount does not exceed the maximum purchase limit.
-
-To summarize, the KentaToken smart contract offers a unique implementation of an ERC20 token. It includes features like a fixed tax fee on transfers, a maximum purchase limit, and owner-only functions such as token burning and pausing token transfers. The contract benefits from OpenZeppelin's widely used and security-audited contracts for robust and compliant functionality.
+In summary, the KentaToken contract is a sophisticated ERC20 token that provides standard functionalities with additional features, including taxation, burn capability, pausing mechanism, and transfer limitations with exceptions for the owner.
