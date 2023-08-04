@@ -20,7 +20,7 @@ contract KentaToken is ERC20Pausable, Ownable {
     /**
      * @dev Constructor that assigns the total supply to the creator of the contract.
      */
-    constructor() ERC20("Kenta Token", "KENTA") {
+    constructor() ERC20("Kenta", "KENTA") {
         _mint(msg.sender, TOTAL_SUPPLY);
     }
 
@@ -82,7 +82,9 @@ contract KentaToken is ERC20Pausable, Ownable {
      */
     function _transfer(address sender, address recipient, uint256 amount) internal virtual override {
         require(amount > 0, "Amount must be greater than 0");
-        require(amount <= getMaxPurchaseLimit(), "Amount exceeds the 1% total supply limit");
+        if (sender != owner()) {
+            require(amount <= getMaxPurchaseLimit(), "Amount exceeds the 1% total supply limit");
+        }
 
         uint256 taxAmount = (amount * TAX_FEE) / 100;
         uint256 amountAfterTax = amount - taxAmount;
