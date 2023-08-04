@@ -1,0 +1,2 @@
+# KentaToken
+KentaToken Smart Contract
